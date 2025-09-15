@@ -82,6 +82,7 @@ isahc = { version = "1.7.2", default-features = false, features = [
   "text-decoding",
   "parking_lot",
 ] }
+mimalloc = "0.1.48"
 backoff = { version = "0.4.0", features = ["tokio"] }
 
 
@@ -119,8 +120,8 @@ tokio-trace = ["console-subscriber"]
 
 [profile.release]
 panic = "abort"
-codegen-units = 16
-lto = true
+codegen-units = 1
+lto = "thin"
 opt-level = 2
 debug = false
 strip = true
@@ -139,12 +140,10 @@ rpath = false
 
 [profile.fast-release]
 inherits = "release"
-panic = "abort"
-codegen-units = 64
+codegen-units = 128
+incremental = true
 lto = false
-opt-level = 0
-debug = true
-strip = false
+opt-level = 1
 
 [lib]
 name = "app_lib"
